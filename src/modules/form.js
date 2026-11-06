@@ -1,4 +1,5 @@
 import { addAppointment, isTimeOccupied } from "./schedules.js"
+import { closeScheduleModal } from "./modal.js"
 
 const form = document.querySelector(".form")
 
@@ -47,10 +48,37 @@ form.addEventListener("submit",(event) => {
           return
      }
 
+     const today = new Date()
+     const year = today.getFullYear()
+     const month = today.getMonth() + 1
+     const day = today.getDate()
+
+     const formattedMonth = String(month).padStart(2, "0")
+     const formattedDay = String(day).padStart(2, "0")
+
+     const formattedDate = `${year}-${formattedMonth}-${formattedDay}`
+
+     if (date < formattedDate) {
+          alert("Não é possível agendar em datas passadas.")
+          return
+     }
+
      if (hour.trim() === "") {
           alert("Informe o horário de agendamento.")
           return
      }
+
+     const currentHour = today.getHours()
+     const currentMinutes = today.getMinutes()
+     
+     const formattedHour = String(currentHour).padStart(2, "0")
+     const formattedMinutes = String(currentMinutes).padStart(2, "0")
+     const formattedTime = `${formattedHour}:${formattedMinutes}`
+
+     if (date === formattedDate && hour <= formattedTime) {
+          alert("Não é possível agendar em horários que já passaram.")
+          return
+     } 
 
      let period 
 
@@ -65,7 +93,7 @@ form.addEventListener("submit",(event) => {
           return
      }
 
-      // Verifica se o horário já está ocupado.
+    // Verifica se o horário já está ocupado.
     if (isTimeOccupied(date, hour)) {
         alert("Este horário já está ocupado.")
         return
@@ -84,5 +112,17 @@ form.addEventListener("submit",(event) => {
 
     // Adiciona o agendamento.
     addAppointment(appointment)
+
+    // Limpa os campos do formulário.
+    form.reset()
+
+    // Fecha o formulário e devolve o foco para o botão de agendamento.
+    closeScheduleModal()
+
+    const parts = date.split("-")
+
+    const formattedAppointmentDate = `${parts[2]}/${parts[1]}/${parts[0]}`
+
+    alert(`Agendamento realizado com sucesso para ${formattedAppointmentDate}, às ${hour}!`)
 })
 

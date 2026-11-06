@@ -12,24 +12,22 @@ buttonSchedule.addEventListener("click", () => {
 
 // Fecha o Modal
 closeModal.addEventListener("click", () => {
-    modal.classList.add("hide")
-
-    buttonSchedule.focus()
+    closeScheduleModal()
 })
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !modal.classList.contains("hide")){
-        modal.classList.add("hide")
-        
-        buttonSchedule.focus()
+        closeScheduleModal()
     }    
 })
 
 modal.addEventListener("click", (event) => {
     if (event.target === modal) {
-        modal.classList.add("hide")
-
-        buttonSchedule.focus()
+        closeScheduleModal()
     }
 })
 
+export function closeScheduleModal() {
+    modal.classList.add("hide")
+    buttonSchedule.focus()
+}

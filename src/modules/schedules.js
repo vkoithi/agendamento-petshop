@@ -25,12 +25,15 @@ function updateSchedules() {
         return appointment.date === selectedDate.value
     })
 
+    // Organiza os agendamentos por horários.
+    filteredAppointments.sort((firstAppointment, secondAppointment) => {
+        return firstAppointment.hour.localeCompare(secondAppointment.hour)
+    })
+    
     // Renderiza os agendamentos encontrados.
     filteredAppointments.forEach((appointment) => {
         renderAppointment(appointment)
     })
-
-    console.log(filteredAppointments)
 }
 
 // Cria os elementos HTML do agendamento.
@@ -89,6 +92,7 @@ export function renderAppointment(appointment) {
 // Cadastra um novo agendamento.
 export function addAppointment(appointment) {
     appointments.push(appointment)
+    selectedDate.value = appointment.date
     updateSchedules()
 }
 
