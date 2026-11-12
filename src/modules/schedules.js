@@ -1,8 +1,38 @@
 
 const appointments = []
 
-// Seleciona o calendário principal.
+// Seleciona o calendário e horário principal.
 const selectedDate = document.querySelector("#date")
+const dateContainer = document.querySelector(".date")
+const schedule = document.querySelector("#schedule")
+const scheduleContainer = document.querySelector("#scheduling .input-wrapper")
+const hour = document.querySelector("#appointment-time")
+const hourContainer = document.querySelector("#hour .input-wrapper")
+
+// Adiciona o padrão visual do navegador ao selecionar os icones
+dateContainer.addEventListener("click", (event) => {
+    if (event.target === selectedDate) {
+        return
+    }
+    
+    selectedDate.showPicker()
+})
+
+scheduleContainer.addEventListener("click", (event) => {
+    if (event.target === schedule) {
+        return
+    }
+
+    schedule.showPicker()
+})
+
+hourContainer.addEventListener("click", (event)=> {
+    if (event.target === hour) {
+        return
+    }
+
+    hour.showPicker()
+})
 
 // Atualiza os agendamentos quando a data é alterada.
 selectedDate.addEventListener("change", () => {
